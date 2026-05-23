@@ -1,3 +1,4 @@
+import katex from 'katex';
 import type { Status } from './data';
 
 export type ConceptDoc = {
@@ -160,51 +161,27 @@ function escapeHtml(text: string) {
     .replace(/>/g, '&gt;');
 }
 
-function renderMath(source: string) {
-  return escapeHtml(source)
-    .replace(/\\quad/g, '&nbsp;&nbsp;&nbsp;')
-    .replace(/\\qquad/g, '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
-    .replace(/\\neg/g, '¬')
-    .replace(/\\land/g, '∧')
-    .replace(/\\lor/g, '∨')
-    .replace(/\\Rightarrow/g, '⇒')
-    .replace(/\\Leftrightarrow/g, '⇔')
-    .replace(/\\in/g, '∈')
-    .replace(/\\subseteq/g, '⊆')
-    .replace(/\\cup/g, '∪')
-    .replace(/\\cap/g, '∩')
-    .replace(/\\setminus/g, '∖')
-    .replace(/\\varnothing/g, '∅')
-    .replace(/\\times/g, '×')
-    .replace(/\\cdot/g, '·')
-    .replace(/\\dots/g, '…')
-    .replace(/\\cdots/g, '⋯')
-    .replace(/\\mapsto/g, '↦')
-    .replace(/\\to/g, '→')
-    .replace(/\\ne/g, '≠')
-    .replace(/\\lim/g, 'lim')
-    .replace(/\\nabla/g, '∇')
-    .replace(/\\partial/g, '∂')
-    .replace(/\\equiv/g, '≡')
-    .replace(/\\pmod\s*([a-zA-Z0-9]+)/g, 'mod $1')
-    .replace(/\\mathbb\{R\}/g, 'ℝ')
-    .replace(/\\operatorname\{([^}]+)\}/g, '$1')
-    .replace(/\\left/g, '')
-    .replace(/\\right/g, '')
-    .replace(/\\mid/g, '|')
-    .replace(/\\sum/g, '∑')
-    .replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g, '<span class="frac"><span>$1</span><span>$2</span></span>')
-    .replace(/\\begin\{pmatrix\}([\s\S]*?)\\end\{pmatrix\}/g, (_, body) => `<span class="pmatrix">${body.replace(/\\\\/g, '<br/>').replace(/&amp;/g, '&')}</span>`);
+function renderMath(source: string, displayMode = false) {
+  try {
+    return katex.renderToString(source, {
+      displayMode,
+      throwOnError: false,
+      strict: 'ignore',
+      trust: false,
+    });
+  } catch {
+    return `<code>${escapeHtml(source)}</code>`;
+  }
 }
 
 function inlineMarkdown(text: string) {
   const placeholders: string[] = [];
-  let out = escapeHtml(text).replace(/\$([^$]+)\$/g, (_, expr) => {
+  let out = text.replace(/\$([^$]+)\$/g, (_, expr) => {
     const token = `@@MATH${placeholders.length}@@`;
-    placeholders.push(`<span class="math-inline">${renderMath(expr)}</span>`);
+    placeholders.push(`<span class="math-inline">${renderMath(expr, false)}</span>`);
     return token;
   });
-  out = out
+  out = escapeHtml(out)
     .replace(/`([^`]+)`/g, '<code>$1</code>')
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
   placeholders.forEach((html, i) => { out = out.replace(`@@MATH${i}@@`, html); });
@@ -226,7 +203,7 @@ export function markdownToHtml(markdown: string) {
     const trimmed = line.trim();
     if (trimmed === '$$') {
       closeLists();
-      if (inMath) { html += `<div class="formula">${renderMath(math.trim())}</div>`; math = ''; inMath = false; }
+      if (inMath) { html += `<div class="formula">${renderMath(math.trim(), true)}</div>`; math = ''; inMath = false; }
       else inMath = true;
       continue;
     }

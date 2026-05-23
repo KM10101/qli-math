@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BookOpen, Clock, Eye, Library, Lock, Network, Send, Sparkles, Target, User, Users } from 'lucide-react';
 import './styles.css';
+import 'katex/dist/katex.min.css';
 import { Layout, Progress, StatusDot } from './components/Layout';
 import { Status, statusMap } from './lib/data';
 import { clearToken, fetchMe, getToken, login, resetPassword } from './lib/auth';

@@ -20,7 +20,7 @@ next: [linear-independence, matrix-as-linear-map]
 向量组 $S=\{v_1,\dots,v_k\}$ 的张成空间是：
 
 $$
-\operatorname{span}(S)=\left\{\sum_{i=1}^k a_i v_i\mid a_i\in\mathbb{R}\right\}
+\mathrm{span}(S)=\{a_1v_1+\cdots+a_kv_k \mid a_i\in\mathbb{R}\}
 $$
 
 ## 例子
