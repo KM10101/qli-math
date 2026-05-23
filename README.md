@@ -1,5 +1,7 @@
 # Qli Math
 
+[中文说明](README.zh-CN.md)
+
 Qli Math is a self-hosted personal mathematics learning knowledge base for lifelong learners. It is designed around learning roadmaps rather than isolated articles: open the app, see your current route, continue the next concept, record notes and questions, and gradually build your own mathematical knowledge garden.
 
 ## Product direction

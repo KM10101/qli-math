@@ -23,6 +23,9 @@ dist/
 *.bak
 *.bak.*
 
+# Local design drafts
+ui_design_hifi/
+
 # OS / editor
 .DS_Store
 .idea/
