@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>首页 · Qli Math</title>
+<link rel="stylesheet" href="css/app.css">
+<style>
+.welcome-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:stretch}
+.focus{background:linear-gradient(180deg,var(--accent-soft),transparent 70%),var(--surface);
+  border:1px solid var(--accent-line);border-radius:var(--radius-lg);padding:24px;display:flex;flex-direction:column}
+.focus .viz{flex:1;min-height:150px;display:grid;place-items:stretch}
+.dash-aside section{margin-bottom:18px}
+@media(max-width:880px){.welcome-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<input type="checkbox" id="nav-drawer" class="drawer-toggle" hidden>
+<nav class="nav">
+  <a class="brand" href="index.html"><span class="mark">Q</span> Qli&nbsp;Math</a>
+  <div class="nav-links">
+    <a href="dashboard.html" class="active">首页</a>
+    <a href="routes.html">学习路线</a>
+    <a href="library.html">知识库</a>
+    <a href="history.html">数学史</a>
+    <a href="my-learning.html">我的学习</a>
+  </div>
+  <div class="nav-right">
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      搜索知识点、路线、人物… <kbd>⌘K</kbd>
+    </div>
+    <div class="avatar">Li</div>
+    <label for="nav-drawer" class="nav-burger" aria-label="菜单">☰</label>
+  </div>
+</nav>
+<aside class="drawer">
+  <a href="dashboard.html">首页</a><a href="routes.html">学习路线</a>
+  <a href="library.html">知识库</a><a href="history.html">数学史</a>
+  <a href="my-learning.html">我的学习</a>
+</aside>
+
+<main class="page">
+
+  <header style="margin-bottom:24px">
+    <div class="eyebrow">星期六 · 2026 年 5 月 23 日</div>
+    <h1 style="margin-top:9px">欢迎回来，Li</h1>
+    <p class="muted" style="max-width:60ch;margin:9px 0 0;font-size:16px">
+      你正在学习 <strong style="color:var(--fg)">线性代数的思想</strong>。继续上次的进度，或者去探索一个新方向。
+    </p>
+  </header>
+
+  <!-- current focus -->
+  <div class="welcome-grid" style="margin-bottom:30px">
+    <div class="focus">
+      <div class="section-head" style="margin-bottom:14px">
+        <span class="chip accent"><span class="st doing sz-s">◐</span> 当前学习</span>
+        <span class="muted small">线性代数的思想 · 阶段 1</span>
+      </div>
+      <div class="eyebrow">当前知识点</div>
+      <h2 style="font-size:27px;margin:7px 0 6px">线性组合</h2>
+      <p class="muted" style="margin:0 0 18px;max-width:44ch">
+        阶段 1：向量与线性组合 · 第 3 / 5 个知识点 · 把向量按比例相加，生成一个新的向量。
+      </p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:auto">
+        <a class="btn primary" href="concept.html">继续学习 →</a>
+        <a class="btn" href="route-detail.html">查看整条路线</a>
+      </div>
+      <hr class="hr">
+      <div class="small muted" style="display:flex;justify-content:space-between;margin-bottom:8px">
+        <span>路线进度</span><span class="num">7 / 24 知识点</span>
+      </div>
+      <div class="progress lg"><i style="width:29%"></i></div>
+    </div>
+
+    <div class="viz" aria-label="线性组合示意图">
+      <svg viewBox="0 0 360 320" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <marker id="a1" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M1 1 L8 4.5 L1 8 Z" fill="var(--accent)"/></marker>
+          <marker id="a2" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M1 1 L8 4.5 L1 8 Z" fill="var(--s-master)"/></marker>
+          <marker id="a3" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M1 1 L8 4.5 L1 8 Z" fill="var(--fg)"/></marker>
+        </defs>
+        <g stroke="var(--border)" stroke-width="1">
+          <line x1="40" y1="280" x2="320" y2="280"/><line x1="40" y1="40" x2="40" y2="280"/>
+          <line x1="110" y1="40" x2="110" y2="280" opacity=".5"/><line x1="180" y1="40" x2="180" y2="280" opacity=".5"/>
+          <line x1="250" y1="40" x2="250" y2="280" opacity=".5"/>
+          <line x1="40" y1="210" x2="320" y2="210" opacity=".5"/><line x1="40" y1="140" x2="320" y2="140" opacity=".5"/>
+          <line x1="40" y1="70" x2="320" y2="70" opacity=".5"/>
+        </g>
+        <line x1="40" y1="280" x2="250" y2="140" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3" opacity=".55"/>
+        <line x1="180" y1="210" x2="250" y2="140" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3" opacity=".55"/>
+        <line x1="40" y1="280" x2="180" y2="210" stroke="var(--accent)" stroke-width="2.6" marker-end="url(#a1)"/>
+        <line x1="40" y1="280" x2="110" y2="140" stroke="var(--s-master)" stroke-width="2.6" marker-end="url(#a2)"/>
+        <line x1="40" y1="280" x2="250" y2="140" stroke="var(--fg)" stroke-width="3" marker-end="url(#a3)"/>
+        <circle cx="250" cy="140" r="4.5" fill="var(--accent)" stroke="#fff" stroke-width="2"/>
+        <text x="150" y="232" font-family="var(--font-math)" font-style="italic" font-size="15" fill="var(--accent)">v₁</text>
+        <text x="78" y="200" font-family="var(--font-math)" font-style="italic" font-size="15" fill="var(--s-master)">v₂</text>
+        <text x="258" y="135" font-family="var(--font-math)" font-style="italic" font-size="14" fill="var(--fg)">a·v₁+b·v₂</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="split">
+    <div>
+      <!-- next steps -->
+      <section style="margin-bottom:28px">
+        <div class="section-head"><h2>下一步建议</h2></div>
+        <div class="grid cols-2">
+          <a class="card hover" href="concept.html">
+            <span class="chip accent" style="margin-bottom:11px">继续</span>
+            <h3 style="font-size:16px;margin-bottom:5px">线性组合</h3>
+            <p class="muted small" style="margin:0">把当前知识点读完，理解向量按比例相加的核心直觉。</p>
+          </a>
+          <a class="card hover" href="concept.html">
+            <span class="chip" style="margin-bottom:11px">接下来</span>
+            <h3 style="font-size:16px;margin-bottom:5px">张成空间</h3>
+            <p class="muted small" style="margin:0">线性组合的自然延伸：一组向量能「张出」怎样的空间。</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- needs review -->
+      <section style="margin-bottom:28px">
+        <div class="section-head"><h2>需要复习</h2><a class="more" href="my-learning.html">全部 →</a></div>
+        <div class="card" style="padding:7px">
+          <a class="concept-row" href="concept.html">
+            <span class="st review">!</span><span class="name">向量加法与数乘</span>
+            <span class="meta">阶段 1 · 上次学习 5 天前</span>
+          </a>
+          <a class="concept-row" href="concept.html">
+            <span class="st review">!</span><span class="name">向量是什么</span>
+            <span class="meta">阶段 1 · 上次学习 8 天前</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- recent -->
+      <section>
+        <div class="section-head"><h2>最近学习</h2><a class="more" href="my-learning.html">全部 →</a></div>
+        <div class="card" style="padding:7px">
+          <a class="concept-row" href="concept.html"><span class="st doing">◐</span><span class="name">线性组合</span><span class="meta">今天</span></a>
+          <a class="concept-row" href="concept.html"><span class="st master">✓</span><span class="name">向量加法与数乘</span><span class="meta">5 天前</span></a>
+          <a class="concept-row" href="concept.html"><span class="st master">✓</span><span class="name">向量是什么</span><span class="meta">8 天前</span></a>
+        </div>
+      </section>
+    </div>
+
+    <!-- sidebar -->
+    <aside class="dash-aside">
+      <section class="card">
+        <div class="section-head" style="margin-bottom:12px"><h2 style="font-size:15px">我的学习路线</h2></div>
+        <a class="concept-row" href="route-detail.html" style="padding:9px 6px">
+          <div style="flex:1">
+            <div class="small" style="font-weight:600">线性代数的思想</div>
+            <div class="progress" style="margin-top:8px"><i style="width:29%"></i></div>
+          </div>
+          <span class="meta num">29%</span>
+        </a>
+        <a class="concept-row" href="route-detail.html" style="padding:9px 6px">
+          <div style="flex:1">
+            <div class="small" style="font-weight:600">数学基础与证明思维</div>
+            <div class="progress green" style="margin-top:8px"><i style="width:62%"></i></div>
+          </div>
+          <span class="meta num">62%</span>
+        </a>
+        <a class="btn sm block" href="routes.html" style="margin-top:12px">浏览全部路线</a>
+      </section>
+
+      <section class="card">
+        <div class="section-head" style="margin-bottom:12px"><h2 style="font-size:15px">今天去探索</h2></div>
+        <a href="history.html" style="display:block">
+          <div class="viz" style="margin-bottom:12px">
+            <svg viewBox="0 0 320 110" preserveAspectRatio="xMidYMid meet">
+              <line x1="20" y1="74" x2="300" y2="74" stroke="var(--border-2)" stroke-width="1.5"/>
+              <g font-family="var(--font-mono)" font-size="10" fill="var(--faint)" text-anchor="middle">
+                <circle cx="60" cy="74" r="4" fill="var(--accent)"/><text x="60" y="96">1844</text>
+                <circle cx="150" cy="74" r="4" fill="var(--accent)"/><text x="150" y="96">1888</text>
+                <circle cx="250" cy="74" r="4" fill="var(--s-master)"/><text x="250" y="96">现代</text>
+              </g>
+              <text x="20" y="34" font-family="var(--font-display)" font-size="15" font-weight="650" fill="var(--fg)">向量空间的诞生</text>
+            </svg>
+          </div>
+          <div class="chip" style="margin-bottom:9px">数学史</div>
+          <h3 style="font-size:15px;margin-bottom:4px">为什么线性代数<br>是现代数学的语言？</h3>
+          <p class="muted tiny" style="margin:0">一个 5 分钟的数学故事</p>
+        </a>
+      </section>
+
+      <section class="card">
+        <h2 class="eyebrow" style="margin-bottom:13px">状态图例</h2>
+        <div class="legend" style="flex-direction:column;gap:10px">
+          <span><span class="st not sz-s">○</span> 未开始</span>
+          <span><span class="st doing sz-s">◐</span> 学习中</span>
+          <span><span class="st read sz-s">●</span> 已读</span>
+          <span><span class="st review sz-s">!</span> 需复习</span>
+          <span><span class="st master sz-s">✓</span> 已掌握</span>
+        </div>
+      </section>
+    </aside>
+  </div>
+</main>
+
+<footer class="foot">Qli Math · 路线图驱动的个人数学学习知识库 · 高保真原型</footer>
+</body>
+</html>

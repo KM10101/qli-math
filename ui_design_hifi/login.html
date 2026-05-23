@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>登录 · Qli Math</title>
+<link rel="stylesheet" href="css/app.css">
+<style>
+body{background:var(--bg)}
+.auth{min-height:100vh;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr)}
+
+/* ---- left: form ---- */
+.auth-form{display:flex;flex-direction:column;padding:34px 40px;min-height:100vh}
+.auth-form .brand{font-size:17px}
+.auth-body{flex:1;display:flex;flex-direction:column;justify-content:center;max-width:380px;width:100%;margin:0 auto;padding:30px 0}
+.auth-body h1{font-size:28px;margin-bottom:8px}
+.auth-body .sub{color:var(--muted);font-size:15px;margin-bottom:30px}
+
+.field{margin-bottom:16px}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:7px;color:var(--fg)}
+.input-wrap{position:relative}
+.input{width:100%;height:44px;padding:0 14px;border:1px solid var(--border-2);border-radius:10px;
+  background:var(--surface);color:var(--fg);font-size:14.5px;font-family:inherit;transition:.13s}
+.input:hover{border-color:var(--faint)}
+.input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.input.has-btn{padding-right:46px}
+.peek{position:absolute;right:6px;top:6px;width:32px;height:32px;border:0;background:transparent;cursor:pointer;
+  display:grid;place-items:center;color:var(--faint);border-radius:7px}
+.peek:hover{color:var(--fg);background:var(--surface-2)}
+.peek svg{width:18px;height:18px}
+.field-error{display:none;color:var(--s-review);font-size:12.5px;margin-top:6px}
+.field.invalid .input{border-color:var(--s-review)}
+.field.invalid .field-error{display:block}
+
+.row-between{display:flex;align-items:center;justify-content:space-between;margin:4px 0 22px}
+.check{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--muted);cursor:pointer;user-select:none}
+.check input{appearance:none;width:17px;height:17px;border:1.5px solid var(--border-2);border-radius:5px;cursor:pointer;
+  display:grid;place-items:center;transition:.12s}
+.check input:checked{background:var(--accent);border-color:var(--accent)}
+.check input:checked::after{content:"✓";color:#fff;font-size:11px;font-weight:700}
+.link{color:var(--accent);font-size:13.5px;font-weight:550;cursor:pointer}
+.link:hover{color:var(--accent-d)}
+
+.divider{display:flex;align-items:center;gap:12px;color:var(--faint);font-size:12px;margin:22px 0}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--border)}
+.btn.lg{height:46px;font-size:15px}
+
+.auth-alt{text-align:center;font-size:13.5px;color:var(--muted);margin-top:24px}
+.auth-foot{display:flex;gap:16px;color:var(--faint);font-size:12px}
+.auth-foot a:hover{color:var(--muted)}
+
+.toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);opacity:0;
+  background:var(--fg);color:var(--bg);padding:11px 18px;border-radius:10px;font-size:13.5px;font-weight:550;
+  box-shadow:var(--shadow);pointer-events:none;transition:.25s;z-index:80;display:flex;align-items:center;gap:9px}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---- right: art ---- */
+.auth-art{position:relative;overflow:hidden;color:#fff;
+  background:linear-gradient(150deg, oklch(34% 0.11 262), oklch(48% 0.17 258) 60%, oklch(58% 0.18 255));
+  display:flex;flex-direction:column;justify-content:space-between;padding:46px}
+.auth-art .grid-svg{position:absolute;inset:0;width:100%;height:100%;opacity:.5}
+.auth-art .art-top{position:relative;z-index:1}
+.auth-art .kicker{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  color:oklch(100% 0 0 / .7)}
+.auth-art .art-quote{position:relative;z-index:1;max-width:420px}
+.auth-art .art-quote .formula{font-family:var(--font-math);font-size:30px;line-height:1.5;margin-bottom:20px;
+  color:#fff;font-style:italic}
+.auth-art .art-quote .formula b{color:oklch(92% 0.08 200);font-style:normal;font-weight:600}
+.auth-art .art-quote p{font-size:16px;line-height:1.6;color:oklch(100% 0 0 / .82)}
+.auth-art .art-meta{position:relative;z-index:1;display:flex;gap:26px;color:oklch(100% 0 0 / .7);font-size:13px}
+.auth-art .art-meta b{display:block;color:#fff;font-size:22px;font-family:var(--font-display);font-weight:700;
+  letter-spacing:-0.02em;margin-bottom:2px}
+
+@media(max-width:880px){
+  .auth{grid-template-columns:1fr}
+  .auth-art{display:none}
+  .auth-form{padding:24px 20px}
+}
+</style>
+</head>
+<body>
+
+<div class="auth">
+
+  <!-- form side -->
+  <section class="auth-form">
+    <a class="brand" href="index.html"><span class="mark">Q</span> Qli&nbsp;Math</a>
+
+    <div class="auth-body">
+      <h1>欢迎回来</h1>
+      <p class="sub">登录以继续你的数学学习路线。</p>
+
+      <form id="loginForm" novalidate>
+        <div class="field" id="f-email">
+          <label for="email">邮箱</label>
+          <div class="input-wrap">
+            <input class="input" type="email" id="email" name="email" placeholder="you@example.com" autocomplete="username" value="li@example.com">
+          </div>
+          <div class="field-error">请输入有效的邮箱地址。</div>
+        </div>
+
+        <div class="field" id="f-pass">
+          <label for="password">密码</label>
+          <div class="input-wrap">
+            <input class="input has-btn" type="password" id="password" name="password" placeholder="输入密码" autocomplete="current-password">
+            <button class="peek" type="button" id="peek" aria-label="显示密码">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="field-error">请输入密码（至少 6 位）。</div>
+        </div>
+
+        <div class="row-between">
+          <label class="check"><input type="checkbox" checked> 记住我</label>
+          <a class="link" id="forgot">忘记密码？</a>
+        </div>
+
+        <button class="btn primary lg block" type="submit">登录</button>
+
+        <div class="divider">或</div>
+
+        <button class="btn lg block" type="button" id="magic">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="m4 4 16 8-16 8 3-8-3-8Z"/></svg>
+          发送登录链接到邮箱
+        </button>
+      </form>
+
+      <p class="auth-alt">还没有账号？<a class="link" id="signup">创建一个</a></p>
+    </div>
+
+    <div class="auth-foot">
+      <span>© 2026 Qli Math</span>
+      <a href="#">隐私</a>
+      <a href="#">条款</a>
+    </div>
+  </section>
+
+  <!-- art side -->
+  <section class="auth-art">
+    <svg class="grid-svg" viewBox="0 0 600 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M40 0H0V40" fill="none" stroke="oklch(100% 0 0 / .12)" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="600" height="800" fill="url(#g)"/>
+      <!-- vectors v1, v2 and combination -->
+      <g transform="translate(300 420)">
+        <line x1="0" y1="0" x2="150" y2="-60" stroke="oklch(92% 0.08 200)" stroke-width="3"/>
+        <polygon points="150,-60 138,-62 144,-50" fill="oklch(92% 0.08 200)"/>
+        <line x1="0" y1="0" x2="60" y2="-150" stroke="#fff" stroke-width="3"/>
+        <polygon points="60,-150 52,-140 64,-138" fill="#fff"/>
+        <line x1="0" y1="0" x2="210" y2="-210" stroke="oklch(85% 0.13 90)" stroke-width="3" stroke-dasharray="6 5"/>
+        <polygon points="210,-210 198,-206 206,-196" fill="oklch(85% 0.13 90)"/>
+        <line x1="150" y1="-60" x2="210" y2="-210" stroke="oklch(100% 0 0 / .35)" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <line x1="60" y1="-150" x2="210" y2="-210" stroke="oklch(100% 0 0 / .35)" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <circle cx="0" cy="0" r="5" fill="#fff"/>
+      </g>
+    </svg>
+
+    <div class="art-top">
+      <span class="kicker">路线图驱动的数学学习</span>
+    </div>
+
+    <div class="art-quote">
+      <div class="formula">a·<b>v₁</b> + b·<b>v₂</b></div>
+      <p>从一条清晰的路线出发，把每个概念都学到「能用自己的话讲出来」。直觉先于形式，理解先于记忆。</p>
+    </div>
+
+    <div class="art-meta">
+      <div><b>3</b>学习路线</div>
+      <div><b>120+</b>知识点</div>
+      <div><b>∞</b>复习与回顾</div>
+    </div>
+  </section>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// password peek
+$('#peek').addEventListener('click', () => {
+  const p = $('#password');
+  p.type = p.type === 'password' ? 'text' : 'password';
+  $('#peek').style.color = p.type === 'text' ? 'var(--accent)' : '';
+});
+
+function toast(msg){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+// validation + submit
+$('#loginForm').addEventListener('submit', e => {
+  e.preventDefault();
+  let ok = true;
+  const email = $('#email').value.trim();
+  const pass = $('#password').value;
+
+  $('#f-email').classList.toggle('invalid', !(ok = emailRe.test(email) && ok));
+  const passOk = pass.length >= 6;
+  $('#f-pass').classList.toggle('invalid', !passOk);
+  ok = ok && passOk;
+
+  if(ok){
+    const btn = e.submitter || $('#loginForm button[type=submit]');
+    btn.textContent = '登录中…';
+    btn.disabled = true;
+    setTimeout(() => { window.location.href = 'dashboard.html'; }, 700);
+  }
+});
+
+// clear error on input
+['email','password'].forEach(id => {
+  $('#'+id).addEventListener('input', () => $('#f-'+(id==='email'?'email':'pass')).classList.remove('invalid'));
+});
+
+$('#magic').addEventListener('click', () => {
+  const email = $('#email').value.trim();
+  if(!emailRe.test(email)){ $('#f-email').classList.add('invalid'); return; }
+  toast('登录链接已发送至 ' + email);
+});
+$('#forgot').addEventListener('click', () => toast('密码重置链接已发送到你的邮箱'));
+$('#signup').addEventListener('click', () => toast('个人学习版可直接登录使用'));
+</script>
+</body>
+</html>

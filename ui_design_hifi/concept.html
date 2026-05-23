@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>线性组合 · Qli Math</title>
+<link rel="stylesheet" href="css/app.css">
+<style>
+/* ---------- concept page: 3-col layout ---------- */
+.three-col{display:grid;grid-template-columns:250px minmax(0,1fr) 300px;gap:30px;
+  max-width:1520px;margin:0 auto;padding:26px 26px 90px;align-items:start}
+.col-side{align-self:start}
+.col-left{position:sticky;top:calc(var(--nav-h) + 22px)}
+
+/* left TOC */
+.toc-route{display:flex;align-items:center;gap:9px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.toc-route .ic{width:30px;height:30px;border-radius:8px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none}
+.toc-route .ic svg{width:16px;height:16px}
+.toc-route .nm{font-size:13.5px;font-weight:600;letter-spacing:-0.01em}
+.toc-route .pr{font-size:11.5px;color:var(--faint)}
+.toc{list-style:none;margin:0;padding:0}
+.toc .stage-label{font-size:11px;font-weight:600;color:var(--faint);text-transform:uppercase;letter-spacing:.05em;margin:18px 0 7px;font-family:var(--font-mono)}
+.toc .stage-label:first-child{margin-top:0}
+.toc a{display:flex;align-items:center;gap:9px;padding:6px 9px;border-radius:8px;font-size:13.5px;color:var(--muted);transition:.12s;line-height:1.3}
+.toc a:hover{background:var(--surface-2);color:var(--fg)}
+.toc a.active{background:var(--accent-soft);color:var(--fg);font-weight:600}
+
+/* center article */
+.concept{min-width:0}
+.head-chips{display:flex;align-items:center;gap:8px;margin:0 0 10px;flex-wrap:wrap}
+.concept h1{font-size:33px;letter-spacing:-0.03em;margin-bottom:4px}
+.lede{font-size:18px;line-height:1.5;color:var(--fg);margin:14px 0 0;padding:2px 0 2px 18px;border-left:3px solid var(--accent)}
+.block-sec{margin-top:34px;scroll-margin-top:76px}
+.block-sec>h2{font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);font-family:var(--font-mono);font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.block-sec>h2::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.concept p{margin:0 0 12px}
+.concept p:last-child{margin-bottom:0}
+.kbd-v{font-family:var(--font-math);font-style:italic;font-weight:600}
+sub{font-size:.72em}
+
+.formula{font-family:var(--font-math);font-size:19px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;text-align:center;color:var(--fg);line-height:1.9}
+.formula em{font-style:italic}
+.vecmat{display:inline-grid;grid-auto-flow:row;vertical-align:middle;padding:0 8px;position:relative;font-size:15px;line-height:1.25}
+.vecmat::before,.vecmat::after{content:"";position:absolute;top:0;bottom:0;width:6px;border:1.5px solid var(--fg)}
+.vecmat::before{left:0;border-right:0;border-radius:3px 0 0 3px}
+.vecmat::after{right:0;border-left:0;border-radius:0 3px 3px 0}
+
+.example{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.example .ex-row{display:flex;align-items:stretch;border-bottom:1px solid var(--border)}
+.example .ex-row:last-child{border-bottom:0}
+.example .ex-k{flex:none;width:128px;padding:13px 16px;font-size:12.5px;color:var(--muted);background:var(--surface-2);border-right:1px solid var(--border);display:flex;align-items:center}
+.example .ex-v{padding:13px 16px;font-family:var(--font-math);font-size:16px}
+.example .ex-v.hl{color:var(--accent);font-weight:600}
+
+.callout{display:flex;gap:12px;padding:14px 16px;border-radius:var(--radius);background:var(--surface-2);border:1px solid var(--border)}
+.callout .ic{flex:none;width:26px;height:26px;border-radius:7px;display:grid;place-items:center;color:#fff;font-size:14px}
+.callout.warn .ic{background:var(--s-review)}
+.callout .bd{font-size:14px}
+.pitfalls{display:flex;flex-direction:column;gap:10px}
+
+.appgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.appcard{border:1px solid var(--border);border-radius:var(--radius);padding:16px;background:var(--surface);transition:.15s}
+.appcard:hover{border-color:var(--border-2);box-shadow:var(--shadow-sm)}
+.appcard .ic{width:32px;height:32px;border-radius:8px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;margin-bottom:10px}
+.appcard .ic svg{width:18px;height:18px}
+.appcard strong{font-size:14px;font-weight:600}
+.appcard p{font-size:13px;color:var(--muted);margin:5px 0 0;line-height:1.5}
+
+.pager{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;margin-top:20px}
+.pager .btn{flex-direction:column;align-items:flex-start;height:auto;padding:11px 16px;gap:2px;max-width:48%}
+.pager .btn .lbl{font-size:11px;color:var(--faint);font-weight:500}
+.pager .btn.primary .lbl{color:oklch(100% 0 0 / .7)}
+.pager .btn .nm{font-size:14.5px;font-weight:600}
+.pager .btn.next{text-align:right;align-items:flex-end}
+
+/* interactive diagram */
+.demo{border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface)}
+.demo-canvas{position:relative;background:var(--surface-2)}
+.demo svg{display:block;width:100%;height:auto}
+.demo-ctrl{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;padding:18px 20px;border-top:1px solid var(--border);background:var(--surface)}
+.slider{display:flex;flex-direction:column;gap:7px}
+.slider .lab{display:flex;align-items:baseline;justify-content:space-between;font-size:13px;color:var(--muted)}
+.slider .lab .v{font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--accent)}
+.slider .lab .v.b{color:var(--s-master)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:999px;background:var(--border-2);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);border:3px solid var(--surface);box-shadow:0 1px 4px oklch(40% 0.04 250 / .3);cursor:grab}
+input[type=range].vb::-webkit-slider-thumb{background:var(--s-master)}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--accent);border:3px solid var(--surface);cursor:grab}
+.demo-read{grid-column:1/-1;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:var(--font-math);font-size:16px;border-top:1px dashed var(--border);margin-top:2px;padding-top:14px}
+.demo-read .res{color:var(--accent);font-weight:600}
+.demo-presets{display:flex;gap:6px;margin-left:auto}
+.demo-presets button{font-family:var(--font-mono);font-size:11.5px;padding:4px 9px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--muted);cursor:pointer;transition:.12s}
+.demo-presets button:hover{border-color:var(--accent-line);color:var(--accent)}
+.demo-cap{font-size:12.5px;color:var(--faint);margin-top:10px;display:flex;align-items:center;gap:7px}
+
+/* right column */
+.side-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:16px}
+.side-card.flush{padding:0;border:0;background:transparent}
+.side-card>h4{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);font-family:var(--font-mono);font-weight:600;margin:0 0 12px}
+.side-card.flush>h4{padding-left:2px}
+.statusbar{display:flex;flex-direction:column;gap:6px}
+.sopt{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--border);border-radius:9px;cursor:pointer;font-size:13.5px;color:var(--muted);background:var(--surface);transition:.12s;text-align:left;font-family:inherit;width:100%}
+.sopt:hover{border-color:var(--border-2);background:var(--surface-2)}
+.sopt.on{border-color:var(--accent-line);background:var(--accent-soft);color:var(--fg);font-weight:550}
+.sopt .chk{margin-left:auto;color:var(--accent);opacity:0;font-size:13px}
+.sopt.on .chk{opacity:1}
+.posrow{font-size:13.5px}
+.posrow .rt{font-weight:600}
+.posrow .pp{color:var(--muted);font-size:12.5px;margin-top:2px}
+.progress-meta{display:flex;justify-content:space-between;font-size:11.5px;color:var(--faint);margin-top:7px}
+.notes textarea{width:100%;border:1px solid var(--border);border-radius:10px;background:var(--surface);padding:11px 12px;font-family:inherit;font-size:13.5px;color:var(--fg);resize:vertical;min-height:92px;line-height:1.55;transition:.12s}
+.notes textarea:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px var(--accent-soft)}
+.notes textarea::placeholder{color:var(--faint)}
+.notes .save{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--s-master);margin-top:7px;opacity:0;transition:.2s}
+.notes .save.show{opacity:1}
+.ai{border:1px solid var(--accent-line);border-radius:var(--radius);overflow:hidden;background:linear-gradient(180deg,var(--accent-soft),transparent 60%)}
+.ai-h{display:flex;align-items:center;gap:8px;padding:13px 14px 0}
+.ai-h .badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--accent);background:var(--surface);border:1px solid var(--accent-line);border-radius:999px;padding:2px 8px}
+.ai-h .soon{font-size:10.5px;color:var(--faint);font-family:var(--font-mono)}
+.ai-body{padding:11px 14px 14px}
+.ai-thread{display:flex;flex-direction:column;gap:9px;margin-bottom:11px}
+.ai-msg{font-size:13px;line-height:1.55;padding:10px 12px;border-radius:11px;max-width:92%}
+.ai-msg.u{align-self:flex-end;background:var(--accent);color:#fff;border-bottom-right-radius:3px}
+.ai-msg.a{align-self:flex-start;background:var(--surface);border:1px solid var(--border);border-bottom-left-radius:3px}
+.ai-msg.a .typing{display:inline-flex;gap:3px}
+.ai-msg.a .typing i{width:5px;height:5px;border-radius:50%;background:var(--faint);animation:blink 1.2s infinite}
+.ai-msg.a .typing i:nth-child(2){animation-delay:.2s}.ai-msg.a .typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,60%,100%{opacity:.25}30%{opacity:1}}
+.ai-input{display:flex;align-items:center;gap:8px;height:40px;padding:0 6px 0 13px;border:1px solid var(--border);border-radius:11px;background:var(--surface)}
+.ai-input input{flex:1;border:0;outline:none;background:transparent;font-family:inherit;font-size:13px;color:var(--fg)}
+.ai-input input::placeholder{color:var(--faint)}
+.ai-input .send{width:30px;height:30px;border-radius:8px;background:var(--accent);color:#fff;border:0;display:grid;place-items:center;cursor:pointer;font-size:15px;transition:.12s}
+.ai-input .send:hover{background:var(--accent-d)}
+.ai-suggest{display:flex;flex-direction:column;gap:6px;margin-top:9px}
+.ai-suggest button{text-align:left;border:1px solid var(--border);background:var(--surface);border-radius:9px;padding:8px 11px;font-size:12.5px;color:var(--muted);cursor:pointer;font-family:inherit;transition:.12s}
+.ai-suggest button:hover{color:var(--accent);border-color:var(--accent-line)}
+
+@media(max-width:1180px){.three-col{grid-template-columns:230px minmax(0,1fr);gap:26px}.col-right{display:none}}
+@media(max-width:860px){
+  .three-col{grid-template-columns:1fr;padding:18px 16px 70px}
+  .col-left{display:none}
+  .concept h1{font-size:27px}
+  .appgrid,.demo-ctrl{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<input type="checkbox" id="nav-drawer" class="drawer-toggle" hidden>
+<nav class="nav">
+  <a class="brand" href="index.html"><span class="mark">Q</span> Qli&nbsp;Math</a>
+  <div class="nav-links">
+    <a href="dashboard.html">首页</a>
+    <a href="routes.html">学习路线</a>
+    <a href="library.html">知识库</a>
+    <a href="history.html">数学史</a>
+    <a href="my-learning.html">我的学习</a>
+  </div>
+  <div class="nav-right">
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      搜索知识点、路线、人物… <kbd>⌘K</kbd>
+    </div>
+    <div class="avatar">Li</div>
+    <label for="nav-drawer" class="nav-burger" aria-label="菜单">☰</label>
+  </div>
+</nav>
+<aside class="drawer">
+  <a href="dashboard.html">首页</a><a href="routes.html">学习路线</a>
+  <a href="library.html">知识库</a><a href="history.html">数学史</a>
+  <a href="my-learning.html">我的学习</a>
+</aside>
+
+<div class="three-col">
+
+  <!-- LEFT: route TOC -->
+  <aside class="col-side col-left">
+    <div class="toc-route">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg></span>
+      <div><div class="nm">线性代数的思想</div><div class="pr">阶段 1 / 5 · 进行中</div></div>
+    </div>
+    <ul class="toc">
+      <li class="stage-label">阶段 1 · 向量与线性组合</li>
+      <li><a href="#"><span class="st master sz-s">✓</span> 向量是什么</a></li>
+      <li><a href="#"><span class="st review sz-s">!</span> 向量加法与数乘</a></li>
+      <li><a href="#" class="active"><span class="st doing sz-s">◐</span> 线性组合</a></li>
+      <li><a href="#"><span class="st not sz-s">○</span> 张成空间</a></li>
+      <li><a href="#"><span class="st not sz-s">○</span> 线性相关与无关</a></li>
+      <li class="stage-label">阶段 2 · 空间、基与维数</li>
+      <li><a href="#"><span class="st not sz-s">○</span> 向量空间</a></li>
+      <li><a href="#"><span class="st not sz-s">○</span> 子空间</a></li>
+      <li><a href="#"><span class="st not sz-s">○</span> 基</a></li>
+      <li><a href="#"><span class="st not sz-s">○</span> 维数</a></li>
+      <li class="stage-label">阶段 3 · 矩阵与线性变换</li>
+      <li><a href="#"><span class="st not sz-s">○</span> 矩阵是什么</a></li>
+      <li><a href="#"><span class="st not sz-s">○</span> 矩阵乘法</a></li>
+      <li><a href="#"><span class="st not sz-s">○</span> 线性变换</a></li>
+    </ul>
+  </aside>
+
+  <!-- CENTER: article -->
+  <article class="concept">
+    <div class="breadcrumb">
+      <a href="routes.html">学习路线</a><span class="sep">/</span>
+      <a href="route-detail.html">线性代数的思想</a><span class="sep">/</span>
+      <span>阶段 1</span><span class="sep">/</span><span>线性组合</span>
+    </div>
+
+    <div class="head-chips">
+      <span class="chip accent" id="head-status"><span class="st doing sz-s">◐</span> 学习中</span>
+      <span class="chip">阶段 1 · 第 3 / 5 个知识点</span>
+      <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 约 8 分钟</span>
+    </div>
+
+    <h1>线性组合</h1>
+    <p class="lede">线性组合就是用一组向量按比例相加，生成一个新的向量。</p>
+
+    <section class="block-sec" id="s-why">
+      <h2>为什么要学</h2>
+      <p>它是理解<strong>张成空间</strong>、<strong>线性相关</strong>、<strong>基</strong>和<strong>维数</strong>的起点。几乎所有线性代数的核心概念，都建立在「把向量按比例加起来」这一个动作之上——先把这个动作看清楚，后面的内容才不会变成符号堆砌。</p>
+    </section>
+
+    <section class="block-sec" id="s-intuition">
+      <h2>直觉解释</h2>
+      <p>给定两个向量 <span class="kbd-v">v</span><sub>1</sub> 和 <span class="kbd-v">v</span><sub>2</sub>，我们可以把它们各自<strong>缩放</strong>（乘以一个数），再相加。改变这两个缩放系数 <span class="kbd-v">a</span>、<span class="kbd-v">b</span>，得到的向量 <span class="kbd-v">a</span><span class="kbd-v">v</span><sub>1</sub> + <span class="kbd-v">b</span><span class="kbd-v">v</span><sub>2</sub> 就会落在平面上不同的位置。下面拖动滑块试试：</p>
+
+      <div class="demo">
+        <div class="demo-canvas">
+          <svg id="vplot" viewBox="0 0 460 300" preserveAspectRatio="xMidYMid meet" aria-label="线性组合交互图">
+            <defs>
+              <marker id="ah-acc" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M1 1 L8 4.5 L1 8 Z" fill="var(--accent)"/></marker>
+              <marker id="ah-g" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M1 1 L8 4.5 L1 8 Z" fill="var(--muted)"/></marker>
+              <marker id="ah-m" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M1 1 L8 4.5 L1 8 Z" fill="var(--s-master)"/></marker>
+            </defs>
+            <g id="grid"></g>
+            <line id="axis-x" stroke="var(--border-2)" stroke-width="1.2"/>
+            <line id="axis-y" stroke="var(--border-2)" stroke-width="1.2"/>
+            <line id="g1" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3" opacity=".5"/>
+            <line id="g2" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3" opacity=".5"/>
+            <line id="av" stroke="var(--accent)" stroke-width="1.6" opacity=".4"/>
+            <line id="bv" stroke="var(--s-master)" stroke-width="1.6" opacity=".4"/>
+            <line id="v1" stroke="var(--accent)" stroke-width="2.4" marker-end="url(#ah-acc)"/>
+            <line id="v2" stroke="var(--s-master)" stroke-width="2.4" marker-end="url(#ah-m)"/>
+            <line id="rv" stroke="var(--fg)" stroke-width="2.8" marker-end="url(#ah-g)"/>
+            <circle id="rpt" r="4.5" fill="var(--accent)" stroke="#fff" stroke-width="2"/>
+            <text id="lab-v1" font-family="var(--font-math)" font-style="italic" font-size="14" fill="var(--accent)">v₁</text>
+            <text id="lab-v2" font-family="var(--font-math)" font-style="italic" font-size="14" fill="var(--s-master)">v₂</text>
+          </svg>
+        </div>
+        <div class="demo-ctrl">
+          <div class="slider">
+            <div class="lab"><span>系数 <span class="kbd-v" style="color:var(--accent)">a</span> &nbsp;(缩放 v₁)</span><span class="v" id="va-val">1.0</span></div>
+            <input type="range" id="ra" min="-3" max="3" step="0.1" value="1">
+          </div>
+          <div class="slider">
+            <div class="lab"><span>系数 <span class="kbd-v" style="color:var(--s-master)">b</span> &nbsp;(缩放 v₂)</span><span class="v b" id="vb-val">1.0</span></div>
+            <input type="range" id="rb" class="vb" min="-3" max="3" step="0.1" value="1">
+          </div>
+          <div class="demo-read">
+            <span class="kbd-v" style="color:var(--accent)">a</span>·<span class="kbd-v" style="color:var(--accent)">v</span><sub>1</sub> +
+            <span class="kbd-v" style="color:var(--s-master)">b</span>·<span class="kbd-v" style="color:var(--s-master)">v</span><sub>2</sub>
+            &nbsp;=&nbsp; <span class="res mono" id="res-vec">(1.0, 3.0)</span>
+            <span class="demo-presets">
+              <button data-a="0" data-b="0">原点</button>
+              <button data-a="2" data-b="-1">2v₁−v₂</button>
+              <button data-a="1" data-b="1">v₁+v₂</button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <p class="demo-cap"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="3"/></svg> 这里 <span class="mono">v₁ = (2, 1)</span>，<span class="mono">v₂ = (-1, 2)</span>。所有可能的落点，恰好铺满整个平面——这就是下一节「张成空间」的伏笔。</p>
+    </section>
+
+    <section class="block-sec" id="s-def">
+      <h2>形式定义</h2>
+      <p>给定向量 <span class="kbd-v">v</span><sub>1</sub>, <span class="kbd-v">v</span><sub>2</sub>, …, <span class="kbd-v">v</span><sub>n</sub> 与标量（实数）<span class="kbd-v">a</span><sub>1</sub>, <span class="kbd-v">a</span><sub>2</sub>, …, <span class="kbd-v">a</span><sub>n</sub>，它们的线性组合定义为：</p>
+      <div class="formula"><em>a</em><sub>1</sub><em>v</em><sub>1</sub> + <em>a</em><sub>2</sub><em>v</em><sub>2</sub> + ⋯ + <em>a</em><sub>n</sub><em>v</em><sub>n</sub></div>
+    </section>
+
+    <section class="block-sec" id="s-example">
+      <h2>一个具体例子</h2>
+      <p>取 <span class="formula" style="display:inline-block;padding:6px 12px;font-size:15px;vertical-align:middle"><em>v</em><sub>1</sub> = <span class="vecmat"><span>2</span><span>1</span></span>，<em>v</em><sub>2</sub> = <span class="vecmat"><span>−1</span><span>2</span></span></span>，计算 <span class="mono">2·v₁ + (−1)·v₂</span>：</p>
+      <div class="example">
+        <div class="ex-row"><div class="ex-k">缩放 v₁（×2）</div><div class="ex-v">2 · (2, 1) = (4, 2)</div></div>
+        <div class="ex-row"><div class="ex-k">缩放 v₂（×−1）</div><div class="ex-v">−1 · (−1, 2) = (1, −2)</div></div>
+        <div class="ex-row"><div class="ex-k">相加</div><div class="ex-v hl">(4, 2) + (1, −2) = (5, 0)</div></div>
+      </div>
+      <p style="margin-top:12px;color:var(--muted);font-size:14px">把上面交互图的滑块拨到 <span class="mono">a=2, b=−1</span>，结果向量正好落在 x 轴上的 <span class="mono">(5, 0)</span>。</p>
+    </section>
+
+    <section class="block-sec" id="s-pitfall">
+      <h2>常见误区</h2>
+      <div class="pitfalls">
+        <div class="callout warn"><span class="ic">!</span><div class="bd"><strong>系数不必是正数。</strong> 它可以是任意实数，包括 0 和负数。系数为 0 表示「这个向量不参与」，为负表示「反方向」。</div></div>
+        <div class="callout warn"><span class="ic">!</span><div class="bd"><strong>别把「线性组合」和「线性相关」混为一谈。</strong> 线性组合是一个<em>动作</em>（按比例相加）；线性相关描述的是一组向量<em>之间的关系</em>。两者紧密相连，但不是同一件事。</div></div>
+      </div>
+    </section>
+
+    <section class="block-sec" id="s-history">
+      <h2>历史背景</h2>
+      <p style="color:var(--muted)">向量与线性结构的现代表述，源自 19 世纪 Hermann Grassmann 的《延伸量理论》(1844) 与 Giuseppe Peano 在 1888 年给出的向量空间公理化。把向量「按比例相加」这一朴素动作抽象成线性运算，正是这一时期数学家从几何直觉走向代数结构的关键一步。</p>
+    </section>
+
+    <section class="block-sec" id="s-app">
+      <h2>应用场景</h2>
+      <div class="appgrid">
+        <div class="appcard">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></span>
+          <strong>机器学习</strong>
+          <p>特征加权求和、词向量与嵌入的组合，本质都是线性组合——权重就是这里的系数。</p>
+        </div>
+        <div class="appcard">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+          <strong>计算机图形</strong>
+          <p>颜色混合、坐标插值、动画补间，都是把若干向量按比例叠加得到的中间结果。</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="hr" style="margin:36px 0 0">
+    <div class="pager">
+      <a class="btn prev" href="#"><span class="lbl">← 上一个</span><span class="nm">向量加法与数乘</span></a>
+      <a class="btn primary next" href="#"><span class="lbl">下一步 →</span><span class="nm">张成空间</span></a>
+    </div>
+  </article>
+
+  <!-- RIGHT: status / connections / notes / AI -->
+  <aside class="col-side col-right">
+    <div class="side-card">
+      <h4>学习状态</h4>
+      <div class="statusbar" id="statusbar">
+        <button class="sopt" data-k="not"><span class="st not sz-m">○</span> 未开始 <span class="chk">✓</span></button>
+        <button class="sopt on" data-k="doing"><span class="st doing sz-m">◐</span> 学习中 <span class="chk">✓</span></button>
+        <button class="sopt" data-k="read"><span class="st read sz-m">●</span> 已读 <span class="chk">✓</span></button>
+        <button class="sopt" data-k="review"><span class="st review sz-m">!</span> 需复习 <span class="chk">✓</span></button>
+        <button class="sopt" data-k="master"><span class="st master sz-m">✓</span> 已掌握 <span class="chk">✓</span></button>
+      </div>
+    </div>
+
+    <div class="side-card">
+      <h4>路线位置</h4>
+      <div class="posrow">
+        <div class="rt">线性代数的思想</div>
+        <div class="pp">阶段 1：向量与线性组合 · 第 3 / 5 个</div>
+      </div>
+      <div class="progress" style="margin-top:11px"><i style="width:29%"></i></div>
+      <div class="progress-meta"><span>整条路线</span><span class="num">29%</span></div>
+    </div>
+
+    <div class="side-card flush">
+      <h4>前置知识</h4>
+      <div class="linklist">
+        <a href="#"><span class="st master sz-s">✓</span> 向量是什么 <span class="arr">→</span></a>
+        <a href="#"><span class="st review sz-s">!</span> 向量加法与数乘 <span class="arr">→</span></a>
+      </div>
+    </div>
+
+    <div class="side-card flush">
+      <h4>相关 / 下一步</h4>
+      <div class="linklist">
+        <a href="#"><span class="st not sz-s">○</span> 张成空间 <span class="arr">→</span></a>
+        <a href="#"><span class="st not sz-s">○</span> 线性相关与无关 <span class="arr">→</span></a>
+        <a href="#"><span class="st not sz-s">○</span> 基 <span class="arr">→</span></a>
+      </div>
+    </div>
+
+    <div class="side-card notes">
+      <h4>我的笔记</h4>
+      <textarea id="notes" placeholder="写下你的理解、当前的疑问，或想之后继续查的内容…"></textarea>
+      <div class="save" id="note-save"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> 已自动保存</div>
+    </div>
+
+    <div class="ai">
+      <div class="ai-h">
+        <span class="badge"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2 2M16.4 16.4l2 2M18.4 5.6l-2 2M7.6 16.4l-2 2"/></svg> 问 AI</span>
+        <span class="soon">预览 · 未来上线</span>
+      </div>
+      <div class="ai-body">
+        <div class="ai-thread" id="ai-thread"></div>
+        <div class="ai-input">
+          <input id="ai-in" type="text" placeholder="基于本页提问…">
+          <button class="send" id="ai-send" aria-label="发送">↑</button>
+        </div>
+        <div class="ai-suggest" id="ai-suggest">
+          <button>能不能用更直观的方式解释？</button>
+          <button>这个概念和机器学习有什么关系？</button>
+          <button>帮我总结这一页。</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer class="foot">Qli Math · 路线图驱动的个人数学学习知识库 · 高保真原型 · 知识点：线性组合</footer>
+
+<script>
+const $ = s => document.querySelector(s);
+const KEY = 'qli:concept:linear-combination';
+
+/* interactive vector diagram */
+(function(){
+  const svg=$('#vplot'), W=460,H=300, ox=W/2, oy=H/2, U=44;
+  const v1=[2,1], v2=[-1,2];
+  const X=x=>ox+x*U, Y=y=>oy-y*U;
+  let g='';
+  for(let i=-5;i<=5;i++){
+    g+=`<line x1="${X(i)}" y1="0" x2="${X(i)}" y2="${H}" stroke="var(--border)" stroke-width="${i===0?0:0.7}"/>`;
+    g+=`<line x1="0" y1="${Y(i)}" x2="${W}" y2="${Y(i)}" stroke="var(--border)" stroke-width="${i===0?0:0.7}"/>`;
+  }
+  $('#grid').innerHTML=g;
+  $('#axis-x').setAttribute('x1',0);$('#axis-x').setAttribute('y1',oy);$('#axis-x').setAttribute('x2',W);$('#axis-x').setAttribute('y2',oy);
+  $('#axis-y').setAttribute('x1',ox);$('#axis-y').setAttribute('y1',0);$('#axis-y').setAttribute('x2',ox);$('#axis-y').setAttribute('y2',H);
+  function setLine(id,x1,y1,x2,y2){const e=$(id);e.setAttribute('x1',x1);e.setAttribute('y1',y1);e.setAttribute('x2',x2);e.setAttribute('y2',y2);}
+  function draw(a,b){
+    const av=[a*v1[0],a*v1[1]], bv=[b*v2[0],b*v2[1]];
+    const r=[av[0]+bv[0],av[1]+bv[1]];
+    setLine('#v1',ox,oy,X(v1[0]),Y(v1[1]));
+    setLine('#v2',ox,oy,X(v2[0]),Y(v2[1]));
+    setLine('#av',ox,oy,X(av[0]),Y(av[1]));
+    setLine('#bv',ox,oy,X(bv[0]),Y(bv[1]));
+    setLine('#g1',X(av[0]),Y(av[1]),X(r[0]),Y(r[1]));
+    setLine('#g2',X(bv[0]),Y(bv[1]),X(r[0]),Y(r[1]));
+    setLine('#rv',ox,oy,X(r[0]),Y(r[1]));
+    $('#rpt').setAttribute('cx',X(r[0]));$('#rpt').setAttribute('cy',Y(r[1]));
+    $('#lab-v1').setAttribute('x',X(v1[0])+6);$('#lab-v1').setAttribute('y',Y(v1[1])-4);
+    $('#lab-v2').setAttribute('x',X(v2[0])+6);$('#lab-v2').setAttribute('y',Y(v2[1])-4);
+    $('#va-val').textContent=a.toFixed(1);
+    $('#vb-val').textContent=b.toFixed(1);
+    $('#res-vec').textContent=`(${r[0].toFixed(1)}, ${r[1].toFixed(1)})`;
+  }
+  const ra=$('#ra'), rb=$('#rb');
+  const upd=()=>draw(parseFloat(ra.value),parseFloat(rb.value));
+  ra.addEventListener('input',upd);rb.addEventListener('input',upd);
+  document.querySelectorAll('.demo-presets button').forEach(btn=>{
+    btn.addEventListener('click',()=>{ra.value=btn.dataset.a;rb.value=btn.dataset.b;upd();});
+  });
+  upd();
+})();
+
+/* status switcher (persisted) */
+(function(){
+  const labels={not:['未开始','not','○'],doing:['学习中','doing','◐'],read:['已读','read','●'],review:['需复习','review','!'],master:['已掌握','master','✓']};
+  const bar=$('#statusbar'), head=$('#head-status');
+  function apply(k){
+    bar.querySelectorAll('.sopt').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
+    const [txt,cls,sym]=labels[k];
+    head.innerHTML=`<span class="st ${cls} sz-s">${sym}</span> ${txt}`;
+    head.classList.toggle('accent', k==='doing'||k==='master');
+  }
+  bar.addEventListener('click',e=>{
+    const b=e.target.closest('.sopt'); if(!b)return;
+    apply(b.dataset.k); localStorage.setItem(KEY+':status',b.dataset.k);
+  });
+  const saved=localStorage.getItem(KEY+':status'); if(saved&&labels[saved]) apply(saved);
+})();
+
+/* notes autosave */
+(function(){
+  const ta=$('#notes'), tag=$('#note-save'); let t;
+  ta.value=localStorage.getItem(KEY+':notes')||'';
+  ta.addEventListener('input',()=>{
+    clearTimeout(t);
+    t=setTimeout(()=>{
+      localStorage.setItem(KEY+':notes',ta.value);
+      tag.classList.add('show'); setTimeout(()=>tag.classList.remove('show'),1600);
+    },500);
+  });
+})();
+
+/* AI ask (simulated preview) */
+(function(){
+  const thread=$('#ai-thread'), input=$('#ai-in'), send=$('#ai-send'), sug=$('#ai-suggest');
+  const canned={
+    '能不能用更直观的方式解释？':'把每个向量想成一个「方向 + 步长」。线性组合就是：沿 v₁ 走 a 步，再沿 v₂ 走 b 步，最后落在哪里。拖一下上面的滑块就能直接看到落点移动。',
+    '这个概念和机器学习有什么关系？':'神经网络里每个神经元算的 w₁x₁ + w₂x₂ + … 就是输入向量的线性组合，权重 w 就是这里的系数 a、b。理解了线性组合，就理解了「加权求和」这一最基础的运算。',
+    '帮我总结这一页。':'线性组合 = 给一组向量各乘一个实数再相加。系数可正可负可为零。它是张成空间、线性相关、基、维数的共同起点，也是机器学习里加权求和的本质。'
+  };
+  function add(role,html){const d=document.createElement('div');d.className='ai-msg '+role;d.innerHTML=html;thread.appendChild(d);return d;}
+  function ask(q){
+    if(!q.trim())return;
+    add('u',q.replace(/</g,'&lt;'));
+    sug.style.display='none'; input.value='';
+    const a=add('a','<span class="typing"><i></i><i></i><i></i></span>');
+    setTimeout(()=>{a.innerHTML=(canned[q]||'（预览版）这里会基于本页内容和你的学习进度给出回答。完整的 AI 问答会在后续版本接入。');},850);
+  }
+  send.addEventListener('click',()=>ask(input.value));
+  input.addEventListener('keydown',e=>{if(e.key==='Enter')ask(input.value);});
+  sug.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>ask(b.textContent)));
+})();
+</script>
+</body>
+</html>

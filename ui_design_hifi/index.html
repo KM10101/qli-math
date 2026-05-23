@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qli Math · 高保真原型</title>
+<link rel="stylesheet" href="css/app.css">
+<style>
+.cover{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;
+  background:radial-gradient(120% 120% at 85% 0%, var(--accent-soft), transparent 55%),var(--surface-2);margin-bottom:14px}
+.cover svg{display:block;width:100%;height:auto}
+.scard{display:flex;flex-direction:column}
+.scard .tag{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-weight:600}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand" href="index.html"><span class="mark">Q</span> Qli&nbsp;Math</a>
+  <div class="nav-links">
+    <a href="index.html" class="active">原型概览</a>
+    <a href="dashboard.html">首页</a>
+    <a href="routes.html">学习路线</a>
+    <a href="concept.html">知识点详情</a>
+  </div>
+  <div class="nav-right">
+    <span class="chip accent">高保真 · hi-fi</span>
+  </div>
+</nav>
+
+<main class="page">
+  <header style="margin-bottom:14px;max-width:72ch">
+    <div class="eyebrow">原型概览 · Prototype overview</div>
+    <h1 style="margin-top:10px;font-size:clamp(28px,4vw,40px)">Qli Math 高保真原型</h1>
+    <p class="muted" style="font-size:16px;margin:12px 0 0">
+      路线图驱动的个人数学学习知识库。这是<strong style="color:var(--fg)">高保真版本</strong>——
+      真实内容、可交互的向量示意图、状态切换与笔记自动保存，采用 modern-minimal 视觉方向。
+      线框版本仍保留在 <a href="../index.html" style="color:var(--accent)">上一级目录</a>。
+    </p>
+  </header>
+
+  <div class="card pad-lg" style="margin:26px 0 30px;background:var(--surface-2)">
+    <div class="eyebrow" style="margin-bottom:12px">核心链路（PRD §18.1）</div>
+    <div class="flow">
+      <a href="dashboard.html" class="chip accent">首页</a><span class="muted">→</span>
+      <a href="routes.html" class="chip accent">路线列表</a><span class="muted">→</span>
+      <a href="route-detail.html" class="chip accent">路线详情</a><span class="muted">→</span>
+      <a href="concept.html" class="chip accent">知识点详情</a>
+    </div>
+    <p class="muted small" style="margin:12px 0 0">这四个页面决定产品主体验。知识点详情是核心，含可拖动的线性组合交互图。</p>
+  </div>
+
+  <div class="grid cols-3">
+
+    <a class="card hover pad-lg scard" href="dashboard.html">
+      <div class="cover"><svg viewBox="0 0 300 150"><rect x="16" y="16" width="170" height="64" rx="6" fill="var(--surface)" stroke="var(--accent-line)"/><rect x="196" y="16" width="88" height="118" rx="6" fill="var(--surface)" stroke="var(--border)"/><rect x="16" y="92" width="80" height="42" rx="6" fill="var(--surface)" stroke="var(--border)"/><rect x="106" y="92" width="80" height="42" rx="6" fill="var(--surface)" stroke="var(--border)"/><rect x="28" y="30" width="60" height="7" rx="3" fill="var(--accent)"/><rect x="28" y="46" width="120" height="5" rx="2" fill="var(--border-2)"/></svg></div>
+      <div class="tag"><span class="chip accent">P0</span><span class="eyebrow">01</span></div>
+      <h3 style="font-size:17px;margin-bottom:5px">首页 Dashboard</h3>
+      <p class="muted small" style="margin:0">当前路线、当前知识点、下一步建议、需复习与最近学习。</p>
+    </a>
+
+    <a class="card hover pad-lg scard" href="routes.html">
+      <div class="cover"><svg viewBox="0 0 300 150"><rect x="16" y="20" width="128" height="50" rx="6" fill="var(--surface)" stroke="var(--accent-line)"/><rect x="156" y="20" width="128" height="50" rx="6" fill="var(--surface)" stroke="var(--border)"/><rect x="16" y="82" width="128" height="50" rx="6" fill="var(--surface)" stroke="var(--border)"/><rect x="156" y="82" width="128" height="50" rx="6" fill="var(--surface)" stroke="var(--border)" stroke-dasharray="4 3"/><rect x="28" y="56" width="70" height="6" rx="3" fill="var(--accent)"/><rect x="168" y="56" width="50" height="6" rx="3" fill="var(--border-2)"/></svg></div>
+      <div class="tag"><span class="chip accent">P0</span><span class="eyebrow">02</span></div>
+      <h3 style="font-size:17px;margin-bottom:5px">学习路线列表</h3>
+      <p class="muted small" style="margin:0">所有可学路线，含难度、阶段数、知识点数与进度。</p>
+    </a>
+
+    <a class="card hover pad-lg scard" href="route-detail.html">
+      <div class="cover"><svg viewBox="0 0 300 150"><circle cx="40" cy="36" r="11" fill="var(--accent)"/><circle cx="40" cy="80" r="11" fill="none" stroke="var(--accent)" stroke-width="2"/><circle cx="40" cy="120" r="11" fill="none" stroke="var(--border-2)" stroke-width="2"/><line x1="40" y1="47" x2="40" y2="69" stroke="var(--border-2)" stroke-width="2"/><line x1="40" y1="91" x2="40" y2="109" stroke="var(--border-2)" stroke-width="2"/><rect x="64" y="26" width="210" height="20" rx="5" fill="var(--surface)" stroke="var(--border)"/><rect x="64" y="70" width="210" height="20" rx="5" fill="var(--surface)" stroke="var(--accent-line)"/><rect x="64" y="110" width="210" height="20" rx="5" fill="var(--surface)" stroke="var(--border)"/></svg></div>
+      <div class="tag"><span class="chip accent">P0</span><span class="eyebrow">03</span></div>
+      <h3 style="font-size:17px;margin-bottom:5px">学习路线详情</h3>
+      <p class="muted small" style="margin:0">目标 / 适合人群 / 前置，阶段式时间线与知识点状态。</p>
+    </a>
+
+    <a class="card hover pad-lg scard" href="concept.html">
+      <div class="cover"><svg viewBox="0 0 300 150"><rect x="14" y="16" width="48" height="118" rx="5" fill="var(--surface)" stroke="var(--border)"/><rect x="72" y="16" width="150" height="118" rx="5" fill="var(--surface)" stroke="var(--accent-line)"/><rect x="232" y="16" width="54" height="118" rx="5" fill="var(--surface)" stroke="var(--border)"/><g stroke="var(--accent)" stroke-width="2" fill="none"><line x1="147" y1="100" x2="190" y2="60"/><line x1="147" y1="100" x2="115" y2="64"/></g><circle cx="190" cy="60" r="3.5" fill="var(--accent)"/></svg></div>
+      <div class="tag"><span class="chip accent">P0</span><span class="eyebrow">04</span></div>
+      <h3 style="font-size:17px;margin-bottom:5px">知识点详情（三栏）</h3>
+      <p class="muted small" style="margin:0">左：路线目录 · 中：正文 + 交互图 · 右：状态/笔记/AI。</p>
+    </a>
+
+    <a class="card hover pad-lg scard" href="my-learning.html">
+      <div class="cover"><svg viewBox="0 0 300 150"><rect x="16" y="18" width="62" height="44" rx="6" fill="var(--surface)" stroke="var(--border)"/><rect x="86" y="18" width="62" height="44" rx="6" fill="var(--surface)" stroke="var(--border)"/><rect x="156" y="18" width="62" height="44" rx="6" fill="var(--surface)" stroke="var(--border)"/><rect x="226" y="18" width="58" height="44" rx="6" fill="var(--surface)" stroke="var(--border)"/><text x="30" y="48" font-family="var(--font-display)" font-size="20" font-weight="700" fill="var(--s-master)">17</text><rect x="16" y="76" width="268" height="56" rx="6" fill="var(--surface)" stroke="var(--border)"/></svg></div>
+      <div class="tag"><span class="chip">P1</span><span class="eyebrow">05</span></div>
+      <h3 style="font-size:17px;margin-bottom:5px">我的学习</h3>
+      <p class="muted small" style="margin:0">各路线进度、笔记、疑问、需复习与已掌握统计。</p>
+    </a>
+
+    <a class="card hover pad-lg scard" href="library.html">
+      <div class="cover"><svg viewBox="0 0 300 150"><g fill="var(--surface)" stroke="var(--border)"><rect x="16" y="20" width="60" height="36" rx="6"/><rect x="86" y="20" width="60" height="36" rx="6"/><rect x="156" y="20" width="60" height="36" rx="6"/><rect x="226" y="20" width="58" height="36" rx="6"/><rect x="16" y="66" width="60" height="36" rx="6"/><rect x="86" y="66" width="60" height="36" rx="6" stroke="var(--accent-line)"/><rect x="156" y="66" width="60" height="36" rx="6"/><rect x="226" y="66" width="58" height="36" rx="6"/></g><circle cx="30" cy="38" r="5" fill="var(--s-master)"/><circle cx="100" cy="84" r="5" fill="var(--accent)"/></svg></div>
+      <div class="tag"><span class="chip">P1</span><span class="eyebrow">06</span></div>
+      <h3 style="font-size:17px;margin-bottom:5px">知识库浏览</h3>
+      <p class="muted small" style="margin:0">按领域分组浏览所有知识点的查阅入口。</p>
+    </a>
+
+    <a class="card hover pad-lg scard" href="history.html">
+      <div class="cover"><svg viewBox="0 0 300 150"><line x1="20" y1="120" x2="280" y2="120" stroke="var(--border-2)" stroke-width="1.5"/><path d="M20 120 Q90 40 160 80 T280 50" fill="none" stroke="var(--accent)" stroke-width="2.5"/><g fill="var(--accent)"><circle cx="20" cy="120" r="4"/><circle cx="160" cy="80" r="4"/><circle cx="280" cy="50" r="4"/></g><text x="20" y="40" font-family="var(--font-math)" font-style="italic" font-size="15" fill="var(--muted)">300 BC → 今天</text></svg></div>
+      <div class="tag"><span class="chip">P2</span><span class="eyebrow">07</span></div>
+      <h3 style="font-size:17px;margin-bottom:5px">数学史</h3>
+      <p class="muted small" style="margin:0">人物、事件、问题与思想演化的轻量探索入口。</p>
+    </a>
+
+    <a class="card hover pad-lg scard" href="login.html">
+      <div class="cover"><svg viewBox="0 0 300 150"><rect x="0" y="0" width="300" height="150" fill="oklch(48% 0.17 258)"/><g transform="translate(150 100)"><line x1="0" y1="0" x2="64" y2="-26" stroke="oklch(92% 0.08 200)" stroke-width="2.5"/><line x1="0" y1="0" x2="26" y2="-64" stroke="#fff" stroke-width="2.5"/><line x1="0" y1="0" x2="90" y2="-90" stroke="oklch(85% 0.13 90)" stroke-width="2.5" stroke-dasharray="5 4"/><circle cx="0" cy="0" r="3.5" fill="#fff"/></g><rect x="104" y="56" width="92" height="38" rx="7" fill="oklch(100% 0 0 / .92)"/><rect x="116" y="68" width="44" height="5" rx="2.5" fill="var(--accent)"/><rect x="116" y="80" width="68" height="4" rx="2" fill="var(--border-2)"/></svg></div>
+      <div class="tag"><span class="chip">账户</span><span class="eyebrow">08</span></div>
+      <h3 style="font-size:17px;margin-bottom:5px">登录</h3>
+      <p class="muted small" style="margin:0">邮箱 / 密码登录，含校验、密码显示与登录链接入口。</p>
+    </a>
+
+    <a class="card hover pad-lg scard" href="settings.html">
+      <div class="cover"><svg viewBox="0 0 300 150"><rect x="16" y="16" width="74" height="118" rx="6" fill="var(--surface)" stroke="var(--border)"/><rect x="26" y="30" width="54" height="9" rx="4" fill="var(--accent-soft)"/><rect x="26" y="46" width="48" height="7" rx="3" fill="var(--border-2)"/><rect x="26" y="60" width="48" height="7" rx="3" fill="var(--border-2)"/><rect x="104" y="16" width="180" height="52" rx="6" fill="var(--surface)" stroke="var(--accent-line)"/><rect x="116" y="30" width="80" height="7" rx="3" fill="var(--accent)"/><rect x="240" y="34" width="32" height="18" rx="9" fill="var(--accent)"/><circle cx="265" cy="43" r="6.5" fill="#fff"/><rect x="104" y="80" width="180" height="54" rx="6" fill="var(--surface)" stroke="var(--border)"/></svg></div>
+      <div class="tag"><span class="chip">账户</span><span class="eyebrow">09</span></div>
+      <h3 style="font-size:17px;margin-bottom:5px">个人设置</h3>
+      <p class="muted small" style="margin:0">重设密码、通知邮箱、AI 模型与学习偏好，左侧分区切换。</p>
+    </a>
+
+  </div>
+
+  <div class="card" style="margin-top:30px;padding:16px 20px">
+    <p class="muted small" style="margin:0">
+      <strong style="color:var(--fg)">关于这一版：</strong>所有页面共用 <span class="mono">hifi/css/app.css</span> 一套设计系统（颜色、排版、组件、状态符号
+      <span class="st not sz-s" style="vertical-align:middle">○</span>
+      <span class="st doing sz-s" style="vertical-align:middle">◐</span>
+      <span class="st master sz-s" style="vertical-align:middle">✓</span>
+      <span class="st review sz-s" style="vertical-align:middle">!</span>），便于统一维护。知识点详情页的状态切换与笔记会保存在浏览器本地。
+    </p>
+  </div>
+</main>
+
+<footer class="foot">Qli Math · 路线图驱动的个人数学学习知识库 · 高保真原型 · modern-minimal</footer>
+</body>
+</html>
