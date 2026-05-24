@@ -21,7 +21,7 @@ next: [vectors, limits]
 
 ## 定义
 
-映射 $f:A	o B$ 指每个 $a\in A$ 都唯一对应一个 $f(a)\in B$。若 $g:B	o C$，则复合 $g\circ f:A	o C$ 定义为：
+映射 $f:A\to B$ 指每个 $a\in A$ 都唯一对应一个 $f(a)\in B$。若 $g:B\to C$，则复合 $g\circ f:A\to C$ 定义为：
 
 $$
 (g\circ f)(a)=g(f(a))

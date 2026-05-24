@@ -228,8 +228,8 @@ interactive: linear-combination
 | 优先级 | slug | 标题 | 状态 |
 |---|---|---|---|
 | P0 | `propositions-and-logic` | 命题与逻辑连接词 | 已有 |
-| P0 | `quantifiers` | 量词：任意与存在 | 待补 |
-| P0 | `necessary-and-sufficient` | 充分条件与必要条件 | 待补 |
+| P0 | `quantifiers` | 量词：任意与存在 | 已有 |
+| P0 | `necessary-and-sufficient` | 充分条件与必要条件 | 已有 |
 | P1 | `negation-of-statements` | 如何否定数学命题 | 待补 |
 
 #### B. 集合与映射
@@ -257,7 +257,7 @@ interactive: linear-combination
 | P0 | `direct-proof` | 直接证明 | 待补 |
 | P0 | `proof-by-contradiction` | 反证法 | 待补 |
 | P0 | `contrapositive-proof` | 逆否证明 | 待补 |
-| P0 | `mathematical-induction` | 数学归纳法 | 待补 |
+| P0 | `mathematical-induction` | 数学归纳法 | 已有 |
 | P1 | `constructive-proof` | 构造性证明 | 待补 |
 | P1 | `counterexamples` | 反例的作用 | 待补 |
 
@@ -304,13 +304,13 @@ interactive: linear-combination
 | P0 | `vectors` | 向量是什么 | 已有 |
 | P0 | `linear-combination` | 线性组合 | 已有，含交互 |
 | P0 | `span` | 张成空间 | 已有 |
-| P0 | `linear-independence` | 线性相关与线性无关 | 待补 |
+| P0 | `linear-independence` | 线性相关与线性无关 | 已有 |
 
 #### B. 空间、基与维数
 
 | 优先级 | slug | 标题 | 状态 |
 |---|---|---|---|
-| P0 | `basis-and-dimension` | 基与维数 | 待补 |
+| P0 | `basis-and-dimension` | 基与维数 | 已有 |
 | P1 | `coordinate-system` | 坐标与坐标系 | 待补 |
 | P1 | `subspace` | 子空间 | 待补 |
 
@@ -319,7 +319,7 @@ interactive: linear-combination
 | 优先级 | slug | 标题 | 状态 |
 |---|---|---|---|
 | P0 | `matrix-as-linear-map` | 矩阵作为线性变换 | 已有 |
-| P0 | `matrix-multiplication` | 矩阵乘法的本质 | 待补 |
+| P0 | `matrix-multiplication` | 矩阵乘法的本质 | 已有 |
 | P1 | `change-of-basis` | 换基与坐标变换 | 待补 |
 | P1 | `inverse-matrix` | 逆矩阵 | 待补 |
 
@@ -413,7 +413,7 @@ interactive: linear-combination
 | 优先级 | slug | 标题 | 状态 |
 |---|---|---|---|
 | P0 | `derivative` | 导数的定义与几何意义 | 已有 |
-| P0 | `chain-rule` | 链式法则 | 待补 |
+| P0 | `chain-rule` | 链式法则 | 已有 |
 | P1 | `implicit-differentiation` | 隐函数求导 | 待补 |
 | P1 | `local-linear-approximation` | 局部线性近似 | 待补 |
 
@@ -421,7 +421,7 @@ interactive: linear-combination
 
 | 优先级 | slug | 标题 | 状态 |
 |---|---|---|---|
-| P0 | `integral` | 积分的直觉 | 待补 |
+| P0 | `integral` | 积分的直觉 | 已有 |
 | P0 | `fundamental-theorem-of-calculus` | 微积分基本定理 | 待补 |
 | P1 | `substitution-integration` | 换元积分 | 待补 |
 | P1 | `integration-by-parts` | 分部积分 | 待补 |
@@ -491,7 +491,7 @@ interactive: linear-combination
 | 优先级 | slug | 标题 | 状态 |
 |---|---|---|---|
 | P0 | `counting-principles` | 基本计数原理 | 已有 |
-| P0 | `permutations-combinations` | 排列与组合 | 待补 |
+| P0 | `permutations-combinations` | 排列与组合 | 已有 |
 | P1 | `binomial-theorem` | 二项式定理 | 待补 |
 | P1 | `pigeonhole-principle` | 鸽巢原理 | 待补 |
 
@@ -517,7 +517,7 @@ interactive: linear-combination
 | 优先级 | slug | 标题 | 状态 |
 |---|---|---|---|
 | P0 | `graphs` | 图的基本概念 | 已有 |
-| P0 | `paths-and-connectivity` | 路径与连通性 | 待补 |
+| P0 | `paths-and-connectivity` | 路径与连通性 | 已有 |
 | P0 | `trees` | 树 | 待补 |
 | P1 | `directed-graphs` | 有向图 | 待补 |
 

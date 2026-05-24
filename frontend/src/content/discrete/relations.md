@@ -17,10 +17,10 @@ next: [graphs]
 
 ## 定义
 
-集合 $A$ 上的二元关系是 $A	imes A$ 的子集：
+集合 $A$ 上的二元关系是 $A\times A$ 的子集：
 
 $$
-R\subseteq A	imes A
+R\subseteq A\times A
 $$
 
 若关系满足自反、对称、传递，则为等价关系。
